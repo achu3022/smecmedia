@@ -1,0 +1,354 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   CSS Custom Properties — Black + Neon Yellow Design Tokens
+   ============================================================ */
+:root {
+  --color-bg:      #000000;
+  --color-surface: #0A0A0A;
+  --color-card:    #111111;
+  --color-yellow:  #FACC15;
+  --color-yellow-bright: #FDE047;
+  --color-text:    #FFFFFF;
+  --color-muted:   #6B7280;
+
+  /* Derived tokens */
+  --color-yellow-10:  rgba(250, 204, 21, 0.10);
+  --color-yellow-15:  rgba(250, 204, 21, 0.15);
+  --color-yellow-18:  rgba(250, 204, 21, 0.18);
+  --color-yellow-25:  rgba(250, 204, 21, 0.25);
+  --color-yellow-40:  rgba(250, 204, 21, 0.40);
+  --color-yellow-55:  rgba(250, 204, 21, 0.55);
+  --color-border:     rgba(250, 204, 21, 0.18);
+  --color-border-hover: rgba(250, 204, 21, 0.50);
+  --color-glow:       rgba(250, 204, 21, 0.55);
+}
+
+/* ============================================================
+   Base / Reset
+   ============================================================ */
+html {
+  scroll-behavior: smooth;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  min-height: 100vh;
+  /* Subtle ambient yellow blobs */
+  background-image:
+    radial-gradient(ellipse 60% 40% at 80% 10%, rgba(250,204,21,0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 30% at 10% 90%, rgba(250,204,21,0.04) 0%, transparent 60%);
+  background-attachment: fixed;
+}
+
+/* ============================================================
+   Typography
+   ============================================================ */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Inter', sans-serif;
+  color: var(--color-text);
+  font-weight: 900;
+}
+
+/* ============================================================
+   Accessibility — Focus Ring
+   ============================================================ */
+*:focus-visible {
+  outline: 2px solid var(--color-yellow);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--color-yellow);
+  outline-offset: 2px;
+}
+
+/* ============================================================
+   Subtle dot-grid overlay
+   ============================================================ */
+.grid-overlay {
+  background-image:
+    repeating-linear-gradient(0deg, transparent, transparent 60px, rgba(250,204,21,0.02) 60px, rgba(250,204,21,0.02) 61px),
+    repeating-linear-gradient(90deg, transparent, transparent 60px, rgba(250,204,21,0.02) 60px, rgba(250,204,21,0.02) 61px);
+}
+
+/* ============================================================
+   Yellow Shimmer Animation
+   ============================================================ */
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
+}
+
+.yellow-shimmer-text {
+  background: linear-gradient(
+    90deg,
+    #fff 0%,
+    #fff 35%,
+    #FACC15 50%,
+    #fff 65%,
+    #fff 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 2.5s linear infinite;
+}
+
+/* ============================================================
+   Card — dark surface with yellow border
+   ============================================================ */
+.dark-card {
+  background: rgba(17, 17, 17, 0.85);
+  border: 1px solid rgba(250, 204, 21, 0.18);
+  border-radius: 1rem;
+}
+
+.dark-card:hover {
+  border-color: rgba(250, 204, 21, 0.45);
+}
+
+/* ============================================================
+   Yellow Glow Utility
+   ============================================================ */
+.yellow-glow {
+  box-shadow: 0 0 20px rgba(250,204,21,0.35), 0 0 40px rgba(250,204,21,0.15);
+}
+
+.yellow-glow-hover:hover {
+  box-shadow: 0 0 20px rgba(250,204,21,0.35), 0 0 40px rgba(250,204,21,0.15);
+  transition: box-shadow 0.3s ease;
+}
+
+/* ============================================================
+   Yellow Glow Pulse (CTA buttons)
+   ============================================================ */
+@keyframes yellow-pulse {
+  0%, 100% { box-shadow: 0 0 8px rgba(250,204,21,0.4), 0 0 20px rgba(250,204,21,0.2); }
+  50%       { box-shadow: 0 0 20px rgba(250,204,21,0.7), 0 0 40px rgba(250,204,21,0.4); }
+}
+
+.yellow-glow-pulse {
+  animation: yellow-pulse 2s ease-in-out infinite;
+}
+
+/* ============================================================
+   Scroll Progress Indicator
+   ============================================================ */
+.scroll-progress {
+  position: fixed;
+  top: 64px;
+  left: 0;
+  height: 3px;
+  background-color: var(--color-yellow);
+  box-shadow: 0 0 8px var(--color-yellow-40), 0 0 16px var(--color-yellow-25);
+  transform-origin: left;
+  z-index: 50;
+}
+
+/* ============================================================
+   Film Strip
+   ============================================================ */
+.film-strip-frame {
+  border-right: 1px solid rgba(250,204,21,0.12);
+  position: relative;
+}
+
+.film-strip-frame::before,
+.film-strip-frame::after {
+  content: '';
+  display: block;
+  height: 10px;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent 0px,
+    transparent 6px,
+    rgba(250,204,21,0.25) 6px,
+    rgba(250,204,21,0.25) 10px
+  );
+}
+
+/* ============================================================
+   Film march animation
+   ============================================================ */
+@keyframes film-march {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.gfx-film-march {
+  animation: film-march 18s linear infinite;
+}
+
+/* ============================================================
+   Old-film wash overlay
+   ============================================================ */
+@keyframes film-wash {
+  0%, 100% { opacity: 0.10; }
+  50%       { opacity: 0.16; }
+}
+
+.gfx-film-wash {
+  animation: film-wash 4s ease-in-out infinite;
+}
+
+/* ============================================================
+   Film scratch lines
+   ============================================================ */
+@keyframes scratch {
+  0%   { transform: scaleY(1) translateY(0); opacity: 0.7; }
+  50%  { transform: scaleY(1.02) translateY(-2px); opacity: 0.5; }
+  100% { transform: scaleY(1) translateY(0); opacity: 0.7; }
+}
+
+.gfx-scratch {
+  animation: scratch 6s ease-in-out infinite;
+}
+
+/* ============================================================
+   Floating animation
+   ============================================================ */
+@keyframes gfx-float-c {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-8px); }
+}
+
+.gfx-float-c {
+  animation: gfx-float-c 3s ease-in-out infinite;
+}
+
+/* ============================================================
+   Flicker (neon text)
+   ============================================================ */
+@keyframes gfx-flicker {
+  0%, 95%, 100% { opacity: 1; }
+  96%           { opacity: 0.85; }
+  97%           { opacity: 1; }
+  98%           { opacity: 0.9; }
+  99%           { opacity: 1; }
+}
+
+.gfx-flicker {
+  animation: gfx-flicker 8s ease-in-out infinite;
+}
+
+/* ============================================================
+   Slow spin
+   ============================================================ */
+@keyframes gfx-spin-slow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.gfx-spin-slow {
+  animation: gfx-spin-slow 12s linear infinite;
+}
+
+/* ============================================================
+   Scan line
+   ============================================================ */
+@keyframes gfx-scan {
+  0%   { top: -4px; }
+  100% { top: 100%; }
+}
+
+.gfx-scan {
+  animation: gfx-scan 2.5s linear infinite;
+}
+
+/* ============================================================
+   Playhead animation
+   ============================================================ */
+@keyframes gfx-playhead {
+  0%   { top: 20%; }
+  100% { top: 80%; }
+}
+
+.gfx-playhead {
+  animation: gfx-playhead 3s ease-in-out infinite alternate;
+}
+
+/* ============================================================
+   Video Timeline
+   ============================================================ */
+.timeline-track {
+  background: linear-gradient(
+    90deg,
+    rgba(250,204,21,0.06) 0%,
+    rgba(250,204,21,0.03) 100%
+  );
+  border: 1px solid rgba(250,204,21,0.18);
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+}
+
+.timeline-playhead {
+  width: 2px;
+  background: var(--color-yellow);
+  box-shadow: 0 0 8px var(--color-yellow);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+}
+
+/* ============================================================
+   Marquee (job roles)
+   ============================================================ */
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee 28s linear infinite;
+}
+
+/* ============================================================
+   Page Transition
+   ============================================================ */
+.page-transition-enter        { opacity: 0; }
+.page-transition-enter-active { opacity: 1; transition: opacity 400ms ease; }
+.page-transition-exit         { opacity: 1; }
+.page-transition-exit-active  { opacity: 0; transition: opacity 300ms ease; }
+
+/* ============================================================
+   Scrollbar Styling
+   ============================================================ */
+::-webkit-scrollbar       { width: 6px; }
+::-webkit-scrollbar-track { background: var(--color-bg); }
+::-webkit-scrollbar-thumb { background: rgba(250,204,21,0.25); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(250,204,21,0.45); }
+
+/* ============================================================
+   Selection Styling
+   ============================================================ */
+::selection {
+  background: rgba(250,204,21,0.35);
+  color: #000;
+}
+
+/* ============================================================
+   Testimonials Carousel Auto-Scroll
+   ============================================================ */
+@keyframes carousel-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-carousel {
+  animation: carousel-scroll linear infinite;
+}
