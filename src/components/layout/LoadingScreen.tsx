@@ -1,23 +1,32 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
-import { useSessionStorage } from '@/hooks/useSessionStorage'
-
+// Loading screen disabled — returns nothing
 export default function LoadingScreen() {
-  const [shown, setShown] = useSessionStorage('loading-shown', false)
-  const [visible, setVisible] = useState(!shown)
+  return null
+}
+  // Start hidden — decide after mount whether to show
+  const [visible, setVisible] = useState(false)
 
   useEffect(() => {
-    if (shown) return
-    const timer = setTimeout(() => {
-      setShown(true)
-      setVisible(false)
-    }, 3000)
-    return () => clearTimeout(timer)
-  }, [shown, setShown])
+    // Check sessionStorage after hydration
+    try {
+      const alreadyShown = sessionStorage.getItem('loading-shown')
+      if (alreadyShown) return // skip on return visits
+    } catch {
+      // sessionStorage unavailable — skip
+      return
+    }
 
-  if (shown) return null
+    // First visit: show the loader
+    setVisible(true)
+
+    const timer = setTimeout(() => {
+      setVisible(false)
+      try { sessionStorage.setItem('loading-shown', 'true') } catch { /* ignore */ }
+    }, 3000)
+
+    return () => clearTimeout(timer)
+  }, [])
 
   return (
     <AnimatePresence>
@@ -32,10 +41,7 @@ export default function LoadingScreen() {
           role="status"
         >
           {/* Grid overlay */}
-          <div
-            className="absolute inset-0 grid-overlay pointer-events-none"
-            aria-hidden="true"
-          />
+          <div className="absolute inset-0 grid-overlay pointer-events-none" aria-hidden="true" />
 
           {/* Ambient blob */}
           <div
@@ -45,7 +51,7 @@ export default function LoadingScreen() {
           />
 
           <div className="relative flex flex-col items-center gap-4">
-            {/* Film strip decorative line */}
+            {/* Film strip */}
             <div className="flex gap-1 mb-2" aria-hidden="true">
               {Array.from({ length: 8 }).map((_, i) => (
                 <div
@@ -67,11 +73,11 @@ export default function LoadingScreen() {
                 animation: 'shimmer 2s linear infinite',
               }}
             >
-              SMEC <span>Media</span>
+              SMEC Media
             </h1>
 
             <p className="text-xs tracking-[0.4em] uppercase" style={{ color: 'rgba(250,204,21,0.5)' }}>
-              Crafting Cinematic Excellence — SMEC Media
+              Crafting Cinematic Excellence
             </p>
 
             {/* Loading bar */}

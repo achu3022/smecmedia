@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 import './globals.css'
-import LoadingScreen from '@/components/layout/LoadingScreen'
 import ScrollProgressIndicator from '@/components/layout/ScrollProgressIndicator'
 import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
@@ -47,7 +46,6 @@ export default function RootLayout({
         />
       </head>
       <body className="bg-bg text-text font-body antialiased">
-        <LoadingScreen />
         <ScrollProgressIndicator />
         <Navbar />
         <div className="pt-16">
